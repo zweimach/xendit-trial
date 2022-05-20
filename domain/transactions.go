@@ -1,5 +1,11 @@
 package domain
 
+const (
+	MISMATCH_TRANSACTION = "MISMATCH_TRANSACTION"
+	MISSING_IN_A_DATA    = "MISSING_IN_A_DATA"
+	MISSING_IN_B_DATA    = "MISSING_IN_B_DATA"
+)
+
 type Transaction struct {
 	PaymentRefID string  `json:"payment_ref_id"`
 	Channel      string  `json:"channel"`
@@ -9,16 +15,10 @@ type Transaction struct {
 	PayerName    string  `json:"payer_name"`
 }
 
-const (
-	MATCHING_TRANSACTION = "MATCHING_TRANSACTION"
-	MISMATCH_TRANSACTION = "MISMATCH_TRANSACTION"
-	MISSING_IN_A_DATA    = "MISSING_IN_A_DATA"
-	MISSING_IN_B_DATA    = "MISSING_IN_B_DATA"
-)
+func (t *Transaction) PartialEq(o *Transaction) bool {
+	return t.PaymentRefID == o.PaymentRefID && t.Channel == o.Channel
+}
 
-func CompareTransaction(a Transaction, b Transaction) string {
-	if a.PaymentCode != b.PaymentCode || a.Amount != b.Amount {
-		return MISMATCH_TRANSACTION
-	}
-	return MATCHING_TRANSACTION
+func (t *Transaction) Eq(o *Transaction) bool {
+	return t.PartialEq(o) && t.PaymentCode == o.PaymentCode && t.Amount == o.Amount
 }

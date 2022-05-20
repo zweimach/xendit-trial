@@ -26,12 +26,12 @@ And it will produce a comparison result like the following example data:
 | `819759c3-cd2a-431a-a5f8-66e22ced49a1`   | `MISMATCH_TRANSACTION` |
 | `3f48ac25-4964-4e5f-8703-82508999dbbd`   | `MISMATCH_TRANSACTION` |
 
-The app will do the following, if the app gets 2 set of input A and B:
+The app will do the following if it gets 2 set of input, A and B:
 
 - Compare a transaction in A and B when a transaction with the following fields are found on both data set:
   - `payment_ref_id`
   - `channel`
-- Output a `MATCHING_TRANSACTION` result if a transaction A and B have **all of the following 4 fields matching**:
+- Consider a transaction as _matching_ and won't produce an output if a transaction in A and B have **all of the following 4 fields matching**[^1]:
   - `payment_ref_id`
   - `channel`
   - `payment_code`
@@ -41,6 +41,8 @@ The app will do the following, if the app gets 2 set of input A and B:
   - `amount`
 - Output a `MISSING_IN_A_DATA` result if a transaction exists in A but not in B
 - Output a `MISSING_IN_B_DATA` result if a transaction exists in B but not in A
+
+[^1]: No output means that the app founds no mismatch or missing transactions.
 
 This is the flow of how the app works:
 
