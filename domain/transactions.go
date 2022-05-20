@@ -15,12 +15,8 @@ type Transaction struct {
 	PayerName    string  `json:"payer_name"`
 }
 
-func (t *Transaction) PartialEq(o *Transaction) bool {
-	return t.PaymentRefID == o.PaymentRefID && t.Channel == o.Channel
-}
-
-func (t *Transaction) Eq(o *Transaction) bool {
-	return t.PartialEq(o) && t.PaymentCode == o.PaymentCode && t.Amount == o.Amount
+func (t Transaction) Eq(o Transaction) bool {
+	return t.PaymentCode == o.PaymentCode && t.Amount == o.Amount
 }
 
 const (
@@ -79,7 +75,7 @@ func CompareTrx(xs []Transaction, ys []Transaction) map[string]string {
 			trx1, trx2 := getTrx(trx[0], xs, ys), getTrx(trx[1], xs, ys)
 
 			// If both transactions are not equal
-			if !trx1.Eq(&trx2) {
+			if !trx1.Eq(trx2) {
 				result[id] = MISMATCH_TRANSACTION
 				continue
 			}

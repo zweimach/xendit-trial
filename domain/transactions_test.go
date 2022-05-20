@@ -19,7 +19,7 @@ func TestTransactionMismatch(t *testing.T) {
 		PaymentCode:  "TEST4359",
 		Amount:       0,
 	}
-	assert.False(t, inputA.Eq(&inputB))
+	assert.False(t, inputA.Eq(inputB))
 }
 
 func TestTransactionMatch(t *testing.T) {
@@ -35,7 +35,7 @@ func TestTransactionMatch(t *testing.T) {
 		PaymentCode:  "TEST4359",
 		Amount:       206930,
 	}
-	assert.True(t, inputA.Eq(&inputB))
+	assert.True(t, inputA.Eq(inputB))
 }
 
 func TestGroupTrx(t *testing.T) {
