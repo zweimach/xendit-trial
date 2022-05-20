@@ -31,7 +31,14 @@ func AuditTransactions(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, errRes)
 	}
 
-	result := make([]AuditTransactionsResponse, 10)
+	result := make([]AuditTransactionsResponse, 0, len(req.A)+len(req.B)/2)
+
+	compareResult := domain.CompareTrx(req.A, req.B)
+
+	for k, v := range compareResult {
+		a := AuditTransactionsResponse{k, v}
+		result = append(result, a)
+	}
 
 	return c.JSON(http.StatusOK, result)
 }
