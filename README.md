@@ -26,7 +26,7 @@ And it will produce a comparison result like the following example data:
 | `819759c3-cd2a-431a-a5f8-66e22ced49a1`   | `MISMATCH_TRANSACTION` |
 | `3f48ac25-4964-4e5f-8703-82508999dbbd`   | `MISMATCH_TRANSACTION` |
 
-The app will do the following if it gets 2 set of input, A and B:
+The app will do the following if it gets 2 sets of input, A and B:
 
 - Compare a transaction in A and B when a transaction with the following fields are found on both data set:
   - `payment_ref_id`
@@ -47,14 +47,14 @@ The app will do the following if it gets 2 set of input, A and B:
 This is the flow of how the app works:
 
 ```
- input --> split the task by the channel field --> compare the sets -> output
+ input -> split the sets by the channel and id -> iterate and compare the data -> output
 ```
 
 ## Technical Spec
 
 To access the API, you only need to send a `POST` request.
 
-The input will be the following JSON object:
+The input will be a JSON object with the following schema:
 
 ```json
 {
@@ -81,7 +81,7 @@ The input will be the following JSON object:
 }
 ```
 
-And the result will be a JSON object with the following schema:
+And the result will be a JSON array with the following schema:
 
 ```json
 [
